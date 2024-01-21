@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        fetch('https://example.com')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                const titleElement = doc.querySelector('title');
+                const title = titleElement ? titleElement.innerText : 'Title not found';
+
+                console.log('Page Title:', title);
+            })
+            .catch(error => console.error('Error fetching the page:', error));
+
+    </script>
+</body>
+
+</html>
