@@ -4,24 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Data Fetching Example</title>
 </head>
 
 <body>
+    <button id="fetchButton">Fetch Data</button>
+    <div id="dataContainer"></div>
+    <script src="script.js"></script>
     <script>
+        document.getElementById('fetchButton').addEventListener('click', fetchData);
 
-        fetch('https://example.com')
-            .then(response => response.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
+        function fetchData() {
+            const url = 'https://example.com/api/data'; // Replace with the actual URL you want to fetch data from
 
-                const titleElement = doc.querySelector('title');
-                const title = titleElement ? titleElement.innerText : 'Title not found';
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Handle the data
+                    displayData(data);
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                });
+        }
 
-                console.log('Page Title:', title);
-            })
-            .catch(error => console.error('Error fetching the page:', error));
+        function displayData(data) {
+            const dataContainer = document.getElementById('dataContainer');
+            // Modify this part based on the structure of the data you receive
+            dataContainer.innerHTML = `<p>Data: ${JSON.stringify(data)}</p>`;
+        }
 
     </script>
 </body>
