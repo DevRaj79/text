@@ -1,3 +1,4 @@
-iframe{
+bp-web-widget-container{
+  position:fixed;
   z-index: 99
 }
